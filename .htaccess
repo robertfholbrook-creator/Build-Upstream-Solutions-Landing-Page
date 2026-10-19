@@ -8,3 +8,11 @@ RewriteRule ^ https://buildupstreamsolutions.com%{REQUEST_URI} [L,R=301]
 
 # Repository housekeeping files are not part of the site.
 RewriteRule ^(README\.md|\.gitignore|\.gitattributes)$ - [F,L]
+
+# Browsers may keep a copy of the page but must check for a newer one on every visit,
+# so updates show up straight away. Images keep the server's default caching.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html?|php)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
