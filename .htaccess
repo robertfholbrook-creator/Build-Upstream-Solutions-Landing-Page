@@ -1,0 +1,10 @@
+# Build Upstream Solutions: server rules for Hostinger (LiteSpeed reads Apache rules).
+RewriteEngine On
+
+# One address for everyone: https://buildupstreamsolutions.com (no www, always HTTPS).
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://buildupstreamsolutions.com%{REQUEST_URI} [L,R=301]
+
+# Repository housekeeping files are not part of the site.
+RewriteRule ^(README\.md|\.gitignore|\.gitattributes)$ - [F,L]

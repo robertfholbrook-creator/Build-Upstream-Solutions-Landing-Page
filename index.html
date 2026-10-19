@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Build Upstream Solutions</title>
 <meta name="description" content="Land use and policy consulting. We help NYC property owners avoid delays and help public organizations streamline the path to a better future.">
+<link rel="canonical" href="https://buildupstreamsolutions.com/">
+<link rel="icon" href="images/build-upstream-mark-ink.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
@@ -251,6 +253,11 @@
   @media (max-width: 400px) {
     .logo img { height: 26px; }
     .nav .btn .cta-long { display: none; }
+    /* Very narrow screens (folded phones): let long button labels wrap and the logo shrink */
+    .btn { white-space: normal; text-align: center; }
+    .header .wrap { gap: var(--space-3); }
+    .logo { flex: 0 1 auto; min-width: 0; }
+    .logo img { height: auto; width: 100%; max-width: 162px; }
   }
   @media (min-width: 401px) { .nav .btn .cta-short { display: none; } }
 </style>
