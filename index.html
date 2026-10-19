@@ -87,11 +87,11 @@
   .header .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); min-height: 76px; }
   .logo { display: block; flex: none; }
   .logo img { height: 40px; width: auto; }
-  .nav { display: flex; align-items: center; gap: var(--space-6); }
+  .nav { margin-left: auto; }
   .nav ul { display: flex; gap: var(--space-6); }
   .nav ul a { font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; padding: 14px 0 12px; border-bottom: 1px solid transparent; transition: border-color .15s ease; }
   .nav ul a:hover { border-bottom-color: var(--accent); }
-  .nav .btn { padding: 11px 18px; }
+  .header-cta { padding: 11px 18px; }
 
   /* Hero */
   /* Name-first hero: the full name set huge across the content width, tagline and intro beneath, colour-block band closing it */
@@ -232,7 +232,14 @@
   @media (max-width: 900px) {
     .wrap { padding: 0 var(--space-4); }
     .section { padding: var(--space-8) 0; }
-    .nav ul { display: none; }
+    /* Header becomes two rows: logo + button, then the section links across the full width */
+    html { scroll-padding-top: 136px; }
+    .header .wrap { flex-wrap: wrap; row-gap: 0; min-height: 0; padding-top: var(--space-3); }
+    .logo { order: 1; }
+    .header-cta { order: 2; margin-left: auto; }
+    .nav { order: 3; flex: 0 0 100%; margin: var(--space-3) 0 0; border-top: 1px solid var(--hairline); }
+    .nav ul { justify-content: flex-start; gap: var(--space-7); }
+    .nav ul a { display: block; font-size: 11px; letter-spacing: 0.12em; padding: 14px 0 13px; }
     /* Narrow screens: the three words stack, left-aligned and equal in size, as the wordmark rules allow */
     .hero-name { font-size: clamp(56px, 17vw, 120px); }
     .hero-row { grid-template-columns: 1fr; align-items: start; margin-top: var(--space-6); padding-top: var(--space-6); padding-bottom: var(--space-7); }
@@ -248,7 +255,8 @@
   }
   @media (max-width: 640px) {
     .logo img { height: 32px; }
-    .nav .btn { padding: 10px 14px; letter-spacing: 0.1em; }
+    .header-cta { padding: 10px 14px; letter-spacing: 0.1em; }
+    .nav ul { justify-content: space-between; gap: var(--space-3); }
     .cards, .items, .works { grid-template-columns: 1fr; }
     .steps { grid-template-columns: 1fr; }
     .step { border-right: 1px solid var(--hairline); }
@@ -264,14 +272,18 @@
   }
   @media (max-width: 400px) {
     .logo img { height: 26px; }
-    .nav .btn .cta-long { display: none; }
+    .header-cta .cta-long { display: none; }
+    .header-cta { white-space: nowrap; }
+    .nav ul { gap: var(--space-2); }
+    .nav ul a { letter-spacing: 0.08em; }
     /* Very narrow screens (folded phones): let long button labels wrap and the logo shrink */
     .btn { white-space: normal; text-align: center; }
     .header .wrap { gap: var(--space-3); }
     .logo { flex: 0 1 auto; min-width: 0; }
     .logo img { height: auto; width: 100%; max-width: 162px; }
   }
-  @media (min-width: 401px) { .nav .btn .cta-short { display: none; } }
+  @media (min-width: 401px) { .header-cta .cta-short { display: none; } }
+  @media (max-width: 340px) { .logo img { max-width: 128px; } }
 </style>
 </head>
 <body>
@@ -289,8 +301,8 @@
         <li><a href="#work">Work</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <a class="btn btn-primary" href="#contact"><span class="cta-long">Book a consultation</span><span class="cta-short">Contact</span></a>
     </nav>
+    <a class="btn btn-primary header-cta" href="#contact"><span class="cta-long">Book a consultation</span><span class="cta-short">Contact</span></a>
   </div>
 </header>
 
