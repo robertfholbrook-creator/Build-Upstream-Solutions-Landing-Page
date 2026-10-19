@@ -82,8 +82,9 @@
   /* Hero */
   /* Name-first hero: the full name set huge across the content width, tagline and intro beneath, colour-block band closing it */
   .hero-top { padding-top: var(--space-8); }
-  .hero-name { margin-top: var(--space-5); font-size: clamp(48px, 7.2vw, 104px); line-height: 0.92; letter-spacing: -0.045em; font-weight: 500; white-space: nowrap; }
-  .hero-name span { display: inline; }
+  /* The three words stack, left-aligned and equal in size, as the wordmark rules allow */
+  .hero-name { margin-top: var(--space-5); font-size: clamp(56px, 8vw, 116px); line-height: 0.92; letter-spacing: -0.045em; font-weight: 500; }
+  .hero-name span { display: block; }
   .hero-row { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-6) var(--space-8); align-items: end; padding-top: var(--space-7); padding-bottom: var(--space-8); margin-top: var(--space-7); border-top: 1px solid var(--hairline); }
   .hero-tagline { font-size: clamp(30px, 3.4vw, 46px); line-height: 1.08; letter-spacing: -0.025em; font-weight: 500; text-wrap: balance; }
   .hero-tagline .hl, .contact-title .hl { white-space: nowrap; }
@@ -219,8 +220,7 @@
     .section { padding: var(--space-8) 0; }
     .nav ul { display: none; }
     /* Narrow screens: the three words stack, left-aligned and equal in size, as the wordmark rules allow */
-    .hero-name { white-space: normal; font-size: clamp(56px, 17vw, 120px); }
-    .hero-name span { display: block; }
+    .hero-name { font-size: clamp(56px, 17vw, 120px); }
     .hero-row { grid-template-columns: 1fr; align-items: start; margin-top: var(--space-6); padding-top: var(--space-6); padding-bottom: var(--space-7); }
     .hero-band { grid-template-columns: 2fr 1fr 1.2fr 0.8fr; height: 120px; }
     .hero-band .b-ground { display: none; }
