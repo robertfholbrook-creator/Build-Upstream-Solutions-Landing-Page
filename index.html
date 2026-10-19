@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build Upstream Solutions</title>
+<meta name="description" content="Land use and policy consulting. We help NYC property owners avoid delays and help public organizations streamline the path to a better future.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  /* Build Upstream Solutions design system tokens (light theme, Palladian) */
+  :root {
+    --palladian: #eee9df; --oatmeal: #c9c1b1; --blue-fantastic: #2c3b4d;
+    --burning-flame: #ffb162; --truffle-trouble: #a35139; --abyssal-blue: #1b2632;
+    --surface: var(--palladian); --surface-raised: #f5f2eb; --surface-sunken: #e3dccf; --surface-inverse: var(--abyssal-blue);
+    --ink: var(--abyssal-blue); --ink-muted: #4a5664; --ink-inverse: var(--palladian);
+    --accent: var(--truffle-trouble); --accent-inverse: var(--burning-flame);
+    --primary: var(--blue-fantastic); --primary-hover: var(--abyssal-blue); --on-primary: var(--palladian);
+    --on-highlight: var(--abyssal-blue);
+    --hairline: var(--oatmeal); --border-strong: #7d7466; --focus: var(--accent);
+    --font-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px;
+    --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px; --space-10: 128px;
+    --content-max: 1200px; --measure: 64ch;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+  body { margin: 0; background: var(--surface); color: var(--ink); font-family: var(--font-sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  p { margin: 0; }
+  h1, h2, h3 { margin: 0; font-weight: 500; text-wrap: balance; }
+  ul { margin: 0; padding: 0; list-style: none; }
+
+  .wrap { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--space-6); }
+  .section { padding: var(--space-9) 0; border-top: 1px solid var(--hairline); }
+  .raised { background: var(--surface-raised); }
+  .sunken { background: var(--surface-sunken); }
+
+  .skip { position: absolute; left: var(--space-4); top: -60px; background: var(--primary); color: var(--on-primary); padding: 10px 16px; z-index: 100; text-decoration: none; font-weight: 600; }
+  .skip:focus { top: var(--space-4); }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* Type */
+  .eyebrow { display: inline-flex; align-items: center; gap: var(--space-3); font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .eyebrow::before { content: ""; width: 32px; border-top: 1px solid currentColor; opacity: .7; }
+  .sunken .eyebrow { color: var(--ink-muted); }
+  .h1 { font-size: clamp(36px, 4.4vw, 44px); line-height: 1.1; letter-spacing: -0.02em; }
+  .h2 { font-size: clamp(24px, 2.6vw, 30px); line-height: 1.2; letter-spacing: -0.01em; }
+  .lead { font-size: 18px; line-height: 28px; color: var(--ink); max-width: 52ch; }
+  .body { font-size: 15px; line-height: 24px; max-width: var(--measure); }
+  .muted { color: var(--ink-muted); }
+  .label { font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+  .stack > * + * { margin-top: var(--space-5); }
+  .hl { color: var(--on-highlight); padding: 0 0.1em; margin: 0 -0.04em; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M3 9 C40 4 90 7 140 5 S190 6 197 8 L198 31 C160 35 110 33 70 36 S15 34 2 33 Z' fill='%23FFB162'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: 100% 52%; background-position: 0 92%; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-3); min-height: 44px; font-family: var(--font-sans); font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; white-space: nowrap; cursor: pointer; border: 1px solid transparent; border-radius: 0; padding: 14px 22px; transition: background-color .15s ease, border-color .15s ease, color .15s ease; }
+  .btn-primary { background: var(--primary); color: var(--on-primary); }
+  .btn-primary:hover { background: var(--primary-hover); }
+  .btn-outline { background: transparent; color: var(--ink); border-color: var(--border-strong); }
+  .btn-outline:hover { border-color: var(--ink); }
+  .btn-link { padding: 4px 0; min-height: 44px; background: none; color: var(--ink); }
+  .arrow { width: 26px; height: 8px; flex: none; transition: transform .15s ease; }
+  .arrow path { stroke: currentColor; fill: none; stroke-width: 1; }
+  .btn:hover .arrow, .card:hover .arrow { transform: translateX(4px); }
+
+  /* Header */
+  .header { position: sticky; top: 0; z-index: 50; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+  .header .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); min-height: 76px; }
+  .logo { display: block; flex: none; }
+  .logo img { height: 40px; width: auto; }
+  .nav { display: flex; align-items: center; gap: var(--space-6); }
+  .nav ul { display: flex; gap: var(--space-6); }
+  .nav ul a { font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; padding: 14px 0 12px; border-bottom: 1px solid transparent; transition: border-color .15s ease; }
+  .nav ul a:hover { border-bottom-color: var(--accent); }
+  .nav .btn { padding: 11px 18px; }
+
+  /* Hero */
+  /* Name-first hero: the full name set huge across the content width, tagline and intro beneath, colour-block band closing it */
+  .hero-top { padding-top: var(--space-8); }
+  .hero-name { margin-top: var(--space-5); font-size: clamp(48px, 7.2vw, 104px); line-height: 0.92; letter-spacing: -0.045em; font-weight: 500; white-space: nowrap; }
+  .hero-name span { display: inline; }
+  .hero-row { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-6) var(--space-8); align-items: end; padding-top: var(--space-7); padding-bottom: var(--space-8); margin-top: var(--space-7); border-top: 1px solid var(--hairline); }
+  .hero-tagline { font-size: clamp(30px, 3.4vw, 46px); line-height: 1.08; letter-spacing: -0.025em; font-weight: 500; text-wrap: balance; }
+  .hero-tagline .hl, .contact-title .hl { white-space: nowrap; }
+  .hero-side { display: flex; flex-direction: column; gap: var(--space-5); }
+  .hero-intro { font-size: 18px; line-height: 28px; color: var(--ink-muted); max-width: 46ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5); }
+  /* Colour-block band: flush brand swatches, the Palladian mark on the navy block (a dark ground) */
+  .hero-band { display: grid; grid-template-columns: 2.4fr 1fr 1.5fr 0.8fr 1.1fr; height: clamp(120px, 15vw, 210px); }
+  .hero-band span { display: block; }
+  .hero-band .b-deep { background: var(--blue-fantastic); display: grid; place-items: center; }
+  .b-deep img { height: 58%; width: auto; }
+  .b-flame { background: var(--burning-flame); }
+  .b-stone { background: var(--oatmeal); }
+  .b-ground { background: var(--surface-sunken); }
+  .b-rust { background: var(--truffle-trouble); }
+
+  /* Services overview */
+  .intro-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-7) var(--space-8); align-items: start; }
+  .cost { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5) 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+  .cost-figure { font-size: clamp(44px, 5vw, 56px); line-height: 1; font-weight: 400; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); margin-top: var(--space-7); }
+  .card { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6); background: var(--surface-raised); border: 1px solid var(--hairline); text-decoration: none; transition: border-color .15s ease; }
+  .card:hover { border-color: var(--border-strong); }
+  .card .label { color: var(--accent); }
+  .card-title { font-size: 30px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 500; }
+  .card .arrow { margin-top: auto; padding-top: var(--space-3); width: 26px; height: 20px; }
+
+  /* Service detail */
+  .svc { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-7) var(--space-8); }
+  .svc-head { align-self: start; position: sticky; top: 112px; }
+  .svc-head .h1 { margin-top: var(--space-4); }
+  .pathways li, .proof li { position: relative; padding-left: var(--space-5); font-size: 15px; line-height: 24px; }
+  .pathways li + li, .proof li + li { margin-top: var(--space-3); }
+  .pathways li::before, .proof li::before { content: ""; position: absolute; left: 0; top: 11px; width: 12px; border-top: 1px solid var(--accent); }
+  .pathways strong, .proof strong { font-weight: 600; }
+  .proof a, .pathways a { color: var(--accent); text-underline-offset: 3px; }
+  .proof a:hover, .pathways a:hover { text-decoration-thickness: 2px; }
+  .items { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6) var(--space-6); }
+  .item { padding-top: var(--space-4); border-top: 1px solid var(--hairline); }
+  .item h3 { font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: var(--space-2); }
+  .item p { font-size: 15px; line-height: 24px; color: var(--ink-muted); }
+  .outcomes { margin-top: var(--space-7); padding: var(--space-6); border: 1px solid var(--hairline); background: var(--surface); }
+  .raised .outcomes { background: var(--surface); }
+  section:not(.raised) .outcomes { background: var(--surface-raised); }
+  .outcomes h3 { margin-bottom: var(--space-4); }
+  .outcomes li { display: flex; gap: var(--space-3); font-size: 15px; line-height: 24px; }
+  .outcomes li + li { margin-top: var(--space-3); }
+  .outcomes svg { flex: none; width: 18px; height: 18px; margin-top: 3px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+
+  /* Bio */
+  .bio { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-7) var(--space-8); align-items: start; }
+  .portrait { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--oatmeal); border: 1px solid var(--hairline); }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+  .portrait-caption { margin-top: var(--space-3); font-size: 13px; line-height: 20px; color: var(--ink-muted); }
+  .bio .h1 { margin-top: var(--space-4); }
+  .bio-role { margin-top: var(--space-2); color: var(--ink-muted); font-size: 15px; }
+  /* How we work: four numbered steps divided by hairline rules */
+  .section-head { display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-7); max-width: 40ch; }
+  .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+  .step { display: flex; flex-direction: column; padding: var(--space-5) var(--space-5) var(--space-7); border-left: 1px solid var(--hairline); }
+  .step:last-child { border-right: 1px solid var(--hairline); }
+  .step-num { font-size: 56px; line-height: 1; font-weight: 400; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--accent); }
+  .step h3 { padding-top: var(--space-8); font-size: 30px; line-height: 1.2; letter-spacing: -0.01em; }
+  .step p { margin-top: var(--space-3); font-size: 15px; line-height: 24px; color: var(--ink-muted); }
+
+  /* Selected work: numbered cards with colour-block media */
+  .works { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-5); }
+  .wcard { display: flex; flex-direction: column; background: var(--surface-raised); border: 1px solid var(--hairline); }
+  /* Report covers / site images, cropped to 3:2; a slow zoom on hover */
+  .wcard-media { display: block; aspect-ratio: 3 / 2; overflow: hidden; background: var(--oatmeal); border-bottom: 1px solid var(--hairline); }
+  .wcard-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+  .wcard:hover .wcard-media img { transform: scale(1.03); }
+  .wcard-body { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-5) var(--space-4); flex: 1; }
+  .wcard-top { display: flex; justify-content: space-between; gap: var(--space-3); font-size: 10px; line-height: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+  .wcard h3 { font-size: 22px; line-height: 1.25; letter-spacing: -0.01em; }
+  .wcard h3 a { text-decoration: none; display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); }
+  .wcard h3 a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .wcard h3 .arrow { transform: translateY(-3px); }
+  .wcard h3 a:hover .arrow { transform: translate(4px, -3px); }
+  .wcard p { font-size: 14px; line-height: 22px; color: var(--ink-muted); }
+
+  /* Contact */
+  .contact { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3.6fr); border: 1px solid var(--hairline); background: var(--surface-raised); }
+  .contact > * { padding: var(--space-7) var(--space-6); }
+  .contact > * + * { border-left: 1px solid var(--hairline); }
+  .contact-title { font-size: clamp(36px, 3.6vw, 48px); line-height: 1.02; letter-spacing: -0.03em; }
+  .form { display: grid; gap: var(--space-5); }
+  .field { display: flex; flex-direction: column; gap: var(--space-2); }
+  .field label, .field legend { font-size: 10px; line-height: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+  .req { color: var(--accent); }
+  .input { font-family: var(--font-sans); font-size: 16px; line-height: 24px; color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid var(--border-strong); border-radius: 0; padding: 8px 0; width: 100%; min-height: 44px; appearance: none; }
+  .input:focus { border-bottom-color: var(--ink); }
+  textarea.input { resize: vertical; min-height: 104px; }
+  select.input { cursor: pointer; padding-right: 24px; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 10px) 50%, calc(100% - 5px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
+  .field-error { font-size: 13px; line-height: 20px; color: var(--accent); min-height: 0; }
+  .field-error:empty { display: none; }
+  .form-note { font-size: 13px; line-height: 20px; color: var(--ink-muted); }
+  .form-status { font-size: 15px; line-height: 24px; color: var(--ink); }
+  .form-status:empty { display: none; }
+  .form-status.is-error { color: var(--accent); }
+  .form-status a { color: inherit; text-underline-offset: 3px; }
+  .btn[disabled] { opacity: .6; cursor: progress; }
+  /* Honeypot: hidden from people, filled in by spam bots */
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .contact > .details { background: var(--surface-sunken); display: flex; flex-direction: column; gap: var(--space-5); padding-left: var(--space-5); padding-right: var(--space-5); }
+  .details .email { font-size: 14px; letter-spacing: -0.005em; }
+  .details .name { font-weight: 600; }
+  .details li { display: flex; gap: var(--space-3); align-items: flex-start; font-size: 15px; line-height: 24px; }
+  .details li + li { margin-top: var(--space-3); }
+  .details svg { flex: none; width: 18px; height: 18px; margin-top: 3px; stroke: var(--ink); fill: none; stroke-width: 1.25; stroke-linecap: square; }
+  .details a { text-decoration: none; overflow-wrap: anywhere; }
+  .details a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Footer */
+  .footer { background: var(--surface-inverse); color: var(--ink-inverse); }
+  .footer-main { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-7); padding: var(--space-8) 0 var(--space-7); }
+  .footer-main img { height: 40px; width: auto; }
+  .footer-tag { margin-top: var(--space-5); font-size: 18px; line-height: 1.4; max-width: 40ch; }
+  .footer-links { display: flex; gap: var(--space-6); }
+  .footer-links a { font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; padding: 14px 0; }
+  .footer-links a:hover { color: var(--accent-inverse); }
+  .footer-bar { border-top: 1px solid var(--blue-fantastic); padding: var(--space-4) 0; font-size: 10px; line-height: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+  .footer :focus-visible { outline-color: var(--accent-inverse); }
+
+  /* Responsive */
+  @media (max-width: 1080px) {
+    .contact { grid-template-columns: 1fr 1fr; }
+    .contact > .contact-intro { grid-column: 1 / -1; border-bottom: 1px solid var(--hairline); }
+    .contact > .form-wrap { border-left: 0; }
+  }
+  @media (max-width: 900px) {
+    .wrap { padding: 0 var(--space-4); }
+    .section { padding: var(--space-8) 0; }
+    .nav ul { display: none; }
+    /* Narrow screens: the three words stack, left-aligned and equal in size, as the wordmark rules allow */
+    .hero-name { white-space: normal; font-size: clamp(56px, 17vw, 120px); }
+    .hero-name span { display: block; }
+    .hero-row { grid-template-columns: 1fr; align-items: start; margin-top: var(--space-6); padding-top: var(--space-6); padding-bottom: var(--space-7); }
+    .hero-band { grid-template-columns: 2fr 1fr 1.2fr 0.8fr; height: 120px; }
+    .hero-band .b-ground { display: none; }
+    .intro-grid, .svc, .bio { grid-template-columns: 1fr; }
+    .steps, .works { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .step:nth-child(2n) { border-right: 1px solid var(--hairline); }
+    .step:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+    .svc-head { position: static; }
+    .bio .portrait { max-width: 420px; }
+    .footer-main { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 640px) {
+    .logo img { height: 32px; }
+    .nav .btn { padding: 10px 14px; letter-spacing: 0.1em; }
+    .cards, .items, .works { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .step { border-right: 1px solid var(--hairline); }
+    .step + .step { border-top: 1px solid var(--hairline); }
+    .step h3 { padding-top: var(--space-5); }
+    .card { padding: var(--space-5); }
+    .contact { grid-template-columns: 1fr; }
+    .contact > * { padding: var(--space-6) var(--space-4); }
+    .contact > * + * { border-left: 0; border-top: 1px solid var(--hairline); }
+    .contact > .contact-intro { border-bottom: 0; }
+    .outcomes { padding: var(--space-5); }
+    .footer-links { flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+  }
+  @media (max-width: 400px) {
+    .logo img { height: 26px; }
+    .nav .btn .cta-long { display: none; }
+  }
+  @media (min-width: 401px) { .nav .btn .cta-short { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="header">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Build Upstream Solutions, back to top">
+      <img src="images/build-upstream-horizontal-ink.svg" alt="Build Upstream Solutions" width="250" height="40">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a class="btn btn-primary" href="#contact"><span class="cta-long">Book a consultation</span><span class="cta-short">Contact</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap hero-top">
+      <p class="eyebrow">Land use and policy consulting</p>
+      <h1 class="hero-name" id="hero-title"><span>Build</span> <span>Upstream</span> <span>Solutions</span></h1>
+      <div class="hero-row">
+        <p class="hero-tagline">Time costs everyone.<br> Build great spaces for people&nbsp;— <span class="hl">faster.</span></p>
+        <div class="hero-side">
+          <p class="hero-intro">We help property owners in New York City avoid delays in building new spaces, and we help public organizations everywhere streamline the path to a better future.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Book a consultation</a>
+            <a class="btn btn-link" href="#services">See our services
+              <svg class="arrow" viewBox="0 0 26 8" aria-hidden="true"><path d="M0 4h25M21.5 0.5 25 4l-3.5 3.5"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-band" aria-hidden="true">
+      <span class="b-deep"><img src="images/build-upstream-mark-palladian.svg" width="64" height="64" alt=""></span>
+      <span class="b-stone"></span><span class="b-flame"></span><span class="b-rust"></span><span class="b-ground"></span>
+    </div>
+  </section>
+
+  <!-- Services overview -->
+  <section class="section" id="services" aria-labelledby="services-title">
+    <div class="wrap">
+      <div class="intro-grid">
+        <div class="stack">
+          <h2 class="eyebrow" id="services-title">Our services</h2>
+          <p class="body">The longer a project takes, the more can go wrong. We work with property owners and with the public organizations that review their projects, and understand both perspectives to find the path to a successful outcome.</p>
+        </div>
+      </div>
+      <div class="cards">
+        <a class="card" href="#project-delivery">
+          <span class="label">For property owners</span>
+          <span class="card-title">Project Delivery</span>
+          <span class="body muted">We clear the path to build: finding what your site can become, choosing the right approval pathway and steering the project through review.</span>
+          <svg class="arrow" viewBox="0 0 26 8" aria-hidden="true"><path d="M0 4h25M21.5 0.5 25 4l-3.5 3.5"/></svg>
+        </a>
+        <a class="card" href="#policy-alignment">
+          <span class="label">For public organizations</span>
+          <span class="card-title">Policy Alignment</span>
+          <span class="body muted">We help fix the path itself: diagnosing permitting bottlenecks, launching programs, designing reforms and helping staff put them in place.</span>
+          <svg class="arrow" viewBox="0 0 26 8" aria-hidden="true"><path d="M0 4h25M21.5 0.5 25 4l-3.5 3.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service 1: Project Delivery -->
+  <section class="section raised" id="project-delivery" aria-labelledby="pd-title">
+    <div class="wrap svc">
+      <div class="svc-head stack">
+        <div>
+          <p class="eyebrow">For property owners</p>
+          <h2 class="h1" id="pd-title">Project Delivery</h2>
+        </div>
+        <p class="lead">We turn a property into a buildable project. We tell you what your site can become, then manage the path from first idea to approved plans.</p>
+        <p class="body">Two new approval pathways are open to small property owners, and most haven't heard of them yet:</p>
+        <ul class="pathways">
+          <li><strong>Expedited Land Use Review Procedure (ELURP)</strong> cuts public review time in half for modest rezonings. Rob was on the staff of the <a href="https://www.nyc.gov/assets/charter/downloads/pdf/2025/7-21-2025-charter-revision-commission-adopted-final-report-digital.pdf" target="_blank" rel="noopener">2025 Charter Revision Commission</a> that created it.</li>
+          <li><strong>Affordable Housing Fast Track</strong> is a 90-day public review for zoning changes that add affordable housing in the 12 community districts that have built the least.</li>
+        </ul>
+        <p class="body">We check whether your project qualifies and plan one that works for your property and your finances.</p>
+        <a class="btn btn-primary" href="#contact">Discuss a property</a>
+      </div>
+      <div>
+        <ul class="items" aria-label="Project Delivery services">
+          <li class="item"><h3>Development potential</h3><p>Zoning review and floor area ratio (FAR) analysis that shows what you can build, and how much.</p></li>
+          <li class="item"><h3>Entitlement strategy</h3><p>The fastest, lowest-risk approval pathway for your project, including whether it qualifies for ELURP or the Fast Track.</p></li>
+          <li class="item"><h3>Scattered sites planning</h3><p>One development strategy for small sites spread across a neighborhood.</p></li>
+          <li class="item"><h3>Land use approvals</h3><p>ULURP (Uniform Land Use Review Procedure), ELURP and Fast Track applications, zoning amendments, special permits and variances.</p></li>
+          <li class="item"><h3>Environmental review</h3><p>We coordinate city (CEQR), state (SEQRA) and federal (NEPA) environmental review.</p></li>
+          <li class="item"><h3>Process management</h3><p>We work with the approval agencies, coordinate your project team and keep the schedule on track.</p></li>
+        </ul>
+        <div class="outcomes">
+          <h3 class="label">What you get</h3>
+          <ul>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9"/></svg>A clear picture of development potential before you commit capital</li>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9"/></svg>An approval strategy with a timeline and a risk profile</li>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9"/></svg>Land use issues found and resolved before they can stall the project midway</li>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9"/></svg>One experienced lead from first analysis through approval</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service 2: Policy Alignment -->
+  <section class="section" id="policy-alignment" aria-labelledby="pa-title">
+    <div class="wrap svc">
+      <div class="svc-head stack">
+        <div>
+          <p class="eyebrow">For public organizations</p>
+          <h2 class="h1" id="pa-title">Policy Alignment</h2>
+        </div>
+        <p class="lead">We help public organizations put policy into practice, from new programs to reforms of slow processes.</p>
+        <p class="body">We dig into an organization's permitting process to find where time is lost and what to fix first. For institutions, we run policy education programs so leadership and staff share an understanding of the policy, its goals and the plan to reach them.</p>
+        <p class="body">We have done this work from the inside:</p>
+        <ul class="proof">
+          <li>Co-authored the <a href="https://www.nyc.gov/mayors-office/news/2026/05/mamdani-administration-releases--speed--reforms-to-deliver-affor" target="_blank" rel="noopener">2026 SPEED Report</a>, with reforms that cut ULURP pre-certification for some project types from two years to six months and connect agencies' permitting IT systems</li>
+          <li>Led <a href="https://www.nyc.gov/assets/home/downloads/pdf/press-releases/2022/GetStuffBuilt.pdf" target="_blank" rel="noopener">Get Stuff Built</a>: 111 reforms to environmental review, land use and permitting across 25 agencies</li>
+          <li>Project manager for <a href="https://housing.hpd.nyc.gov/adu" target="_blank" rel="noopener">ADU for You</a>, including <a href="https://housing.hpd.nyc.gov/adu/guidebook" target="_blank" rel="noopener">NYC's ADU Homeowner Guidebook</a> and web tool</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">Talk about your organization</a>
+      </div>
+      <div>
+        <ul class="items" aria-label="Policy Alignment services">
+          <li class="item"><h3>Permitting deep dives</h3><p>Mapping current workflows, finding bottlenecks and recommending practical reforms.</p></li>
+          <li class="item"><h3>Permitting streamlining</h3><p>Fewer duplicate reviews, clearer requirements and coordinated sign-offs, so projects move from filing to approval faster.</p></li>
+          <li class="item"><h3>Permitting IT modernization</h3><p>Linked agency portals and data, digital plan review, and clear review-time metrics for applicants.</p></li>
+          <li class="item"><h3>Education and alignment</h3><p>Policy training programs and value-based change management for teams and leadership.</p></li>
+          <li class="item"><h3>Capital program management</h3><p>Structuring and advancing capital projects and portfolios.</p></li>
+          <li class="item"><h3>Interagency governance</h3><p>Coordinating roles, decisions and handoffs across agencies.</p></li>
+          <li class="item"><h3>Partnerships and procurement</h3><p>Structuring public-private partnerships and procurement for public projects.</p></li>
+          <li class="item"><h3>Stakeholder relationships</h3><p>Building and managing relationships with communities, elected officials and partners.</p></li>
+        </ul>
+        <div class="outcomes">
+          <h3 class="label">What you get</h3>
+          <ul>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9"/></svg>A clear diagnosis of where your process creates friction, and why</li>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9"/></svg>The easiest, highest-impact reforms first, then a path to the bigger fixes. Early wins build trust with stakeholders.</li>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9"/></svg>Staff who are supported and aligned around shared goals and policy direction</li>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9"/></svg>Faster, more predictable outcomes for the projects you oversee</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How we work -->
+  <section class="section raised" id="approach" aria-labelledby="approach-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How we work</p>
+        <h2 class="h1" id="approach-title">From first analysis to the new places people need.</h2>
+      </div>
+      <ol class="steps">
+        <li class="step"><span class="step-num">01</span><h3>Diagnose</h3><p>We find where time is lost, on your site or in the agency's process.</p></li>
+        <li class="step"><span class="step-num">02</span><h3>Plan</h3><p>We choose the fastest, lowest-risk path and set out the timeline and the risks before you commit capital.</p></li>
+        <li class="step"><span class="step-num">03</span><h3>Navigate</h3><p>We steer the work through review, working with the approval agencies and keeping your team on schedule.</p></li>
+        <li class="step"><span class="step-num">04</span><h3>Deliver</h3><p>Owners get approved plans. Public organizations get reforms their staff can put in place.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Bio -->
+  <section class="section sunken" id="about" aria-labelledby="about-title">
+    <div class="wrap bio">
+      <figure style="margin:0">
+        <div class="portrait">
+          <img src="images/rob-holbrook.jpg" width="900" height="1287" loading="lazy" alt="Portrait of Rob Holbrook">
+        </div>
+      </figure>
+      <div>
+        <p class="eyebrow">Who we are</p>
+        <h2 class="h1" id="about-title">Rob Holbrook</h2>
+        <p class="bio-role">Founder and principal</p>
+        <div class="stack" style="margin-top: var(--space-6)">
+          <p class="lead">Rob has spent more than 20 years planning, reforming and delivering New York City's development process.</p>
+          <p class="body">He has worked at the New York City Economic Development Corporation, the Department of City Planning and the Mayor's Office of Policy and Planning. Delivering projects from every side of the system taught him where they stall and how to keep them moving. He then used that experience to fix the system: the City chose him to lead Get Stuff Built, its effort to cut approval times in half, and he co-wrote the SPEED Report.</p>
+          <p class="body">In 2023 the New York State Association for Affordable Housing gave Rob its Advocate of the Year Award for Excellence. He holds a Master of Public Administration from Georgia State University and a Bachelor of Arts from St. John's College.</p>
+          <p class="body">You work directly with Rob from start to finish.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected work -->
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Selected work</p>
+        <h2 class="h1" id="work-title">Reforms reshaping how New York City approves projects.</h2>
+      </div>
+      <div class="works">
+        <article class="wcard">
+          <a class="wcard-media" href="https://www.nyc.gov/mayors-office/news/2026/05/mamdani-administration-releases--speed--reforms-to-deliver-affor" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/speed-report.jpg" width="1200" height="800" loading="lazy" alt=""></a>
+          <div class="wcard-body">
+            <div class="wcard-top"><span>01 &middot; 2026</span><span>Co-author</span></div>
+            <h3><a href="https://www.nyc.gov/mayors-office/news/2026/05/mamdani-administration-releases--speed--reforms-to-deliver-affor" target="_blank" rel="noopener">SPEED Report <svg class="arrow" viewBox="0 0 26 8" aria-hidden="true"><path d="M0 4h25M21.5 0.5 25 4l-3.5 3.5"/></svg></a></h3>
+            <p>Seven major initiatives to cut years off affordable housing approvals and permitting, including connected agency permitting systems.</p>
+          </div>
+        </article>
+        <article class="wcard">
+          <a class="wcard-media" href="https://housing.hpd.nyc.gov/adu" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/adu-for-you.jpg" width="1200" height="800" loading="lazy" alt=""></a>
+          <div class="wcard-body">
+            <div class="wcard-top"><span>02 &middot; 2026</span><span>Project manager</span></div>
+            <h3><a href="https://housing.hpd.nyc.gov/adu" target="_blank" rel="noopener">ADU for You <svg class="arrow" viewBox="0 0 26 8" aria-hidden="true"><path d="M0 4h25M21.5 0.5 25 4l-3.5 3.5"/></svg></a></h3>
+            <p>A City program, guidebook and web tool that help homeowners plan, finance, permit and build an ancillary dwelling unit.</p>
+          </div>
+        </article>
+        <article class="wcard">
+          <a class="wcard-media" href="https://www.nyc.gov/assets/charter/downloads/pdf/2025/7-21-2025-charter-revision-commission-adopted-final-report-digital.pdf" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/charter-revision-commission.jpg" width="1200" height="800" loading="lazy" alt=""></a>
+          <div class="wcard-body">
+            <div class="wcard-top"><span>03 &middot; 2025</span><span>Senior advisor</span></div>
+            <h3><a href="https://www.nyc.gov/assets/charter/downloads/pdf/2025/7-21-2025-charter-revision-commission-adopted-final-report-digital.pdf" target="_blank" rel="noopener">Charter Revision Commission <svg class="arrow" viewBox="0 0 26 8" aria-hidden="true"><path d="M0 4h25M21.5 0.5 25 4l-3.5 3.5"/></svg></a></h3>
+            <p>Charter amendments that created ELURP, which halves public review time for modest housing, affordable housing and resiliency projects.</p>
+          </div>
+        </article>
+        <article class="wcard">
+          <a class="wcard-media" href="https://www.nyc.gov/assets/home/downloads/pdf/press-releases/2022/GetStuffBuilt.pdf" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/get-stuff-built.jpg" width="1200" height="800" loading="lazy" alt=""></a>
+          <div class="wcard-body">
+            <div class="wcard-top"><span>04 &middot; 2022</span><span>Executive director</span></div>
+            <h3><a href="https://www.nyc.gov/assets/home/downloads/pdf/press-releases/2022/GetStuffBuilt.pdf" target="_blank" rel="noopener">Get Stuff Built <svg class="arrow" viewBox="0 0 26 8" aria-hidden="true"><path d="M0 4h25M21.5 0.5 25 4l-3.5 3.5"/></svg></a></h3>
+            <p>111 reforms to environmental review, land use and permitting, agreed by 25 City agencies to cut development delays by about 50%.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="contact">
+        <div class="contact-intro stack">
+          <p class="eyebrow">Contact</p>
+          <h2 class="contact-title" id="contact-title">Let's talk about your vision for <span class="hl">the future.</span></h2>
+          <p class="body muted">Tell us about the property you want to build on or the process you want to fix, and Rob will be in touch.</p>
+        </div>
+
+        <div class="form-wrap">
+          <form class="form" id="inquiry" action="contact.php" method="post" novalidate>
+            <div class="hp" aria-hidden="true">
+              <label for="f-website">Leave this field empty</label>
+              <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
+              <p class="field-error" id="e-name" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email">
+              <p class="field-error" id="e-email" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="f-org">Organization</label>
+              <input class="input" id="f-org" name="organization" type="text" autocomplete="organization">
+            </div>
+            <div class="field">
+              <label for="f-type">I'm reaching out as</label>
+              <select class="input" id="f-type" name="type">
+                <option>A property owner or developer</option>
+                <option>A public organization</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-msg">Tell us what you want to change <span class="req" aria-hidden="true">*</span></label>
+              <textarea class="input" id="f-msg" name="message" required aria-describedby="e-msg"></textarea>
+              <p class="field-error" id="e-msg" role="alert"></p>
+            </div>
+            <div>
+              <button class="btn btn-primary" id="f-submit" type="submit"><span class="btn-text">Send inquiry</span>
+                <svg class="arrow" viewBox="0 0 26 8" aria-hidden="true"><path d="M0 4h25M21.5 0.5 25 4l-3.5 3.5"/></svg></button>
+            </div>
+            <p class="form-status" id="f-status" role="status" aria-live="polite"></p>
+            <p class="form-note"><span class="req" aria-hidden="true">*</span> Required</p>
+          </form>
+        </div>
+
+        <div class="details">
+          <img src="images/build-upstream-mark-ink.svg" alt="" width="64" height="64" style="width:64px;height:64px">
+          <div>
+            <p class="name">Rob Holbrook</p>
+            <p class="muted" style="font-size:13px;line-height:20px">Principal and Founder<br>Build Upstream Solutions LLC</p>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><rect x="2" y="4" width="14" height="10"/><path d="M2 4l7 6 7-6"/></svg><a class="email" href="mailto:rob@buildupstreamsolutions.com">rob@buildupstreamsolutions.com</a></li>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M5 2h3l1.5 4-2 1.5a9 9 0 0 0 3 3L12 8.5l4 1.5v3a2 2 0 0 1-2 2A12 12 0 0 1 3 4a2 2 0 0 1 2-2z"/></svg><a href="tel:+13476036749">347-603-6749</a></li>
+            <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 16s5-4.6 5-8.5A5 5 0 0 0 4 7.5C4 11.4 9 16 9 16z"/><circle cx="9" cy="7.5" r="1.8"/></svg><span>New York City</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-main">
+      <div>
+        <img src="images/build-upstream-horizontal-palladian.svg" alt="Build Upstream Solutions" width="250" height="40">
+        <p class="footer-tag">A land use and policy consultancy. We help property owners in New York City avoid delays in building new spaces, and we help public organizations everywhere streamline the path to a better future.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+  <div class="footer-bar">
+    <div class="wrap">&copy; 2026 Build Upstream Solutions LLC</div>
+  </div>
+</footer>
+
+<script>
+  // Inquiry form: inline validation, then POST to contact.php (Hostinger runs it and emails Rob).
+  // Without JavaScript the form still posts normally and contact.php redirects back here.
+  (function () {
+    var form = document.getElementById('inquiry');
+    var status = document.getElementById('f-status');
+    var submit = document.getElementById('f-submit');
+    var submitText = submit.querySelector('.btn-text');
+    var FALLBACK = 'Your message didn’t go through. Please email <a href="mailto:rob@buildupstreamsolutions.com">rob@buildupstreamsolutions.com</a> instead.';
+    function showStatus(html, isError) {
+      status.innerHTML = html;
+      status.classList.toggle('is-error', !!isError);
+    }
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('sent') === '1') showStatus('Thanks. Rob will be in touch.');
+    if (params.get('error')) showStatus(FALLBACK, true);
+    var rules = [
+      ['f-name', 'e-name', function (v) { return v.trim() ? '' : 'Enter your name.'; }],
+      ['f-email', 'e-email', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? '' : 'Enter an email address like name@example.com.'; }],
+      ['f-msg', 'e-msg', function (v) { return v.trim() ? '' : 'Tell us a little about what you want to change.'; }]
+    ];
+    function check(rule) {
+      var input = document.getElementById(rule[0]);
+      var msg = rule[2](input.value);
+      document.getElementById(rule[1]).textContent = msg;
+      input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      return !msg;
+    }
+    rules.forEach(function (r) {
+      document.getElementById(r[0]).addEventListener('blur', function () { if (this.value) check(r); });
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var firstBad = null;
+      rules.forEach(function (r) { if (!check(r) && !firstBad) firstBad = document.getElementById(r[0]); });
+      if (firstBad) { firstBad.focus(); return; }
+      submit.disabled = true;
+      submitText.textContent = 'Sending…';
+      showStatus('');
+      fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+        .then(function (res) { return res.json().catch(function () { return { ok: false }; }); })
+        .then(function (data) {
+          if (data && data.ok) {
+            form.reset();
+            showStatus('Thanks. Rob will be in touch.');
+          } else {
+            showStatus(FALLBACK, true);
+          }
+        })
+        .catch(function () { showStatus(FALLBACK, true); })
+        .then(function () {
+          submit.disabled = false;
+          submitText.textContent = 'Send inquiry';
+        });
+    });
+  })();
+</script>
+</body>
+</html>
